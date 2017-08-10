@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# create venv and .env file for autovenv in current path
+
+# vars
+PARAM=$1
+CMD="virtualenv venv"
+RC=0
+
+# checks
+
+if [[ ${PARAM} != "create" ]]; then
+  echo "Usage: $(basename $0) create"
+  RC=1
+fi
+
+# create venv
+if [[ $RC -eq 0 ]]; then
+  eval ${CMD}
+  RC=$?
+fi
+
+# update config files
+if [[ $RC -eq 0 ]]; then
+  echo "source venv/bin/activate" > .env
+else
+  echo "==> error creating Python venv. RC: ${RC}"
+fi
+
+# activate venv
+if [[ $RC -eq 0 ]]; then
+  CMD="source venv/bin/activate"
+  RC=$?
+fi
+
+# print summary and info
+if [[ $RC -eq 0 ]]; then
+  echo
+  echo "* created Python venv:     $(pwd)/venv"
+  echo "* created autovenv config: $(pwd)/.env"
+  echo "* activated venv. "
+  echo "Enter \"deactivate\" to exit"
+  echo
+fi
+
+
+exit ${RC}
