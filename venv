@@ -27,9 +27,10 @@ else
   echo "==> error creating Python venv. RC: ${RC}"
 fi
 
-# activate venv
+# update .gitignore
 if [[ $RC -eq 0 ]]; then
-  CMD="source venv/bin/activate"
+  echo .env >> .gitignore
+  echo venv >> .gitignore
   RC=$?
 fi
 
@@ -38,10 +39,13 @@ if [[ $RC -eq 0 ]]; then
   echo
   echo "* created Python venv:     $(pwd)/venv"
   echo "* created autovenv config: $(pwd)/.env"
-  echo "* activated venv. "
+  echo "* updated .gitignore"
+  echo
+  echo "Enter \"cd .\" to activate venv"
   echo "Enter \"deactivate\" to exit"
   echo
 fi
 
+cd $(pwd)
 
 exit ${RC}
