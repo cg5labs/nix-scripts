@@ -1,0 +1,29 @@
+#!/bin/bash
+
+### only run on Linux ###
+OS=$(uname -o)
+if [[ ${OS} != "GNU/Linux" ]];
+  echo "==> ERROR: Only runs on Linux. Detected OS: ${OS}"
+fi
+
+### run as root ###
+if [[ ${UID} -ne 0 ]];
+  echo "==> ERROR: root-access required to load/unload kernel modules"
+  exit 1
+fi
+
+MODULES="kvm.ko kvm-intel.ko"
+
+for MODULE in ${MODULES} ; do
+  if [[ ! -r /lib/modules/$(uname -r)/kernel/arch/x86/kvm/${MODULE} ]]; then
+    echo "==> ERROR: cannot access: /lib/modules/$(uname -r)/kernel/arch/x86/kvm/${MODULE}"
+  else
+    /sbin/insmod /lib/modules/$(uname -r)/kernel/arch/x86/kvm/${MODULE}
+    RC=$?
+    if [[ ${RC} -ne 0 ]]; then
+      echo "==> Failed loading: /lib/modules/$(uname -r)/kernel/arch/x86/kvm/${MODULE}"
+    fi
+  fi
+done
+
+exit ${RC}
