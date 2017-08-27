@@ -2,12 +2,12 @@
 
 ### only run on Linux ###
 OS=$(uname -o)
-if [[ ${OS} != "GNU/Linux" ]];
+if [[ ${OS} != "GNU/Linux" ]]; then
   echo "==> ERROR: Only runs on Linux. Detected OS: ${OS}"
 fi
 
 ### run as root ###
-if [[ ${UID} -ne 0 ]];
+if [[ ${UID} -ne 0 ]]; then
   echo "==> ERROR: root-access required to load/unload kernel modules"
   exit 1
 fi
