@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+[[ -r ${HOME}/.Xmodmap ]] && XMODMAP_CONFIG="${HOME}/.Xmodmap"
+[[ -r ${HOME}/.xmodmap ]] && XMODMAP_CONFIG="${HOME}/.xmodmap"
+
+xmodmap ${XMODMAP_CONFIG}

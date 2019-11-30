@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# reset keymap to default en-us
+# see: https://askubuntu.com/questions/29603/how-do-i-clear-xmodmap-settings
+
+setxkbmap -option
